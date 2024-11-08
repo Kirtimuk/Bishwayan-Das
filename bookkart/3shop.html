@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Book Verse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        :root {
+            --primary-color: #66c7d4;
+            --dark-blue: #030326;
+            --card-bg-color: #0d0d28;
+        }
+
+        body {
+            background-color: var(--dark-blue);
+            color: white;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: var(--dark-blue);
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo-icon {
+            background: white;
+            color: var(--dark-blue);
+            padding: 0 5px;
+            font-size: 1.8rem;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-bar input {
+            padding: 12px 20px;
+            border-radius: 5px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            width: 300px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            background: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #4fa8b3;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-icons a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-icons a:hover {
+            color: var(--primary-color);
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary-color);
+            color: white;
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            background-color: var(--dark-blue);
+        }
+
+        .main-nav ul {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .main-nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .main-nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease;
+        }
+
+        .main-nav a:hover::after {
+            width: 100%;
+        }
+
+        .contact-info {
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+
+        .featured-section {
+            padding: 4rem 5%;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .featured-section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-section p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .book-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .book-card {
+            background: var(--card-bg-color);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: calc(25% - 30px);
+        }
+
+        .book-card img {
+            width: 192px;
+            height: 240;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .book-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .book-card .price {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .book-card .rating {
+            margin: 10px 0;
+            color: gold;
+        }
+
+        .book-card .rating span {
+            font-size: 1.2rem;
+        }
+
+        .special-offers {
+            padding: 5rem;
+            background-color: #040434;
+            text-align: center;
+        }
+
+        .special-offers h2 {
+            font-size: 2.5rem;
+            color: #66c7d4;
+            margin-bottom: 1rem;
+        }
+
+        .special-offers p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            font-size: 2rem;
+        }
+
+        .countdown div {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .countdown span {
+            display: block;
+            font-size: 1.5rem;
+        }
+
+        .offer-button {
+            margin-top: 2rem;
+            background-color: transparent;
+            border: 2px solid #66c7d4;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            color: #66c7d4;
+            cursor: pointer;
+        }
+
+        .offer-button:hover {
+            background-color: #66c7d4;
+            color: white;
+        }
+
+        footer {
+            background-color: var(--dark-blue);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .footer-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin: 20px;
+            text-align: center
+        }
+        .footer-column h3 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-column ul li {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .footer-column ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin-left: 8px;
+        }
+        .footer-column ul li i {
+            font-size: 1.2rem;
+            margin-right: 8px;
+        }
+        .footer-column ul li a:hover {
+            text-decoration: underline;
+        }
+        .footer-name {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .footer-description {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .footer-bottom {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: rgb(187, 187, 187);
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="top-nav">
+            <a href="#" class="logo">
+                <span class="logo-icon">B</span>ook Kart
+            </a>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search for Books">
+                <button onclick="searchBooks()">Search</button>
+            </div>
+            <div class="nav-icons">
+                <a href="#" class="cart-icon" title="Cart" onclick="addToCart()">
+                    🛒<span id="cartCount" class="cart-badge">0</span>
+                </a>
+                <a href="#" title="Account">👤</a>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="2home.html">Home</a></li>
+                <li><a href="3shop.html">Shop</a></li>
+                <li><a href="4aboutus.html">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="contact-info">
+                <span>🎧</span>
+                <span>(+01)-234-56789</span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="featured-section">
+        <h2>Featured Collections</h2>
+        <p>Our Featured Collections</p>
+
+        <div class="book-grid">
+            <div class="book-card">
+                <img src="shop1.jpg" alt="Not available">
+                <h3>A Thousand Splendid Suns</h3>
+                <p class="price">₹ 600.00</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+            </div>
+            <div class="book-card">
+                <img src="shop2.jpg" alt="Not available">
+                <h3>The Hound of the Baskervilles</h3>
+                <p class="price">₹ 500.00</p>
+                <div class="rating">⭐⭐⭐⭐</div>
+            </div>
+            <div class="book-card">
+                <img src="shop3.jpg" alt="Not available">
+                <h3>To Kill a Mockingbird</h3>
+                <p class="price">₹ 400.00</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+            </div>
+            <div class="book-card">
+                <img src="shop5.jpg" alt="Not available">
+                <h3>Harry Potter and the Philosopher's Stone</h3>
+                <p class="price">₹ 350.00</p>
+                <div class="rating">⭐⭐⭐⭐</div>
+            </div>
+        </div>
+
+        <div class="book-grid">
+            <div class="book-card">
+                <img src="shop4.jpg" alt="Not available">
+                <h3>The Kite Runner</h3>
+                <p class="price">₹ 300.00</p>
+                <div class="rating">⭐⭐⭐⭐</div>
+            </div>
+            <div class="book-card">
+                <img src="shop6.jpg" alt="Not available">
+                <h3>Pahare Feluda</h3>
+                <p class="price">₹ 550.00</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+            </div>
+            <div class="book-card">
+                <img src="shop7.jpg" alt="Not available">
+                <h3>Murder on the Orient Express</h3>
+                <p class="price">₹ 300.00</p>
+                <div class="rating">⭐⭐⭐⭐</div>
+            </div>
+            <div class="book-card">
+                <img src="shop8.jpg" alt="Not available">
+                <h3>Hamlet</h3>
+                <p class="price">₹ 250.00</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="special-offers">
+        <h2>Special Offers</h2>
+        <p>All books are 50% off now! Don't miss such a deal!</p>
+        <div class="countdown">
+            <div>
+                <span id="days">15</span>
+                Days
+            </div>
+            <div>
+                <span id="hours">21</span>
+                Hour
+            </div>
+            <div>
+                <span id="minutes">18</span>
+                Min
+            </div>
+            <div>
+                <span id="seconds">14</span>
+                Sec
+            </div>
+        </div>
+        <button class="offer-button">Explore More</button>
+    </section>
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-name">Book Kart</div>
+                <div class="footer-description">
+                    Our online bookstore is a heaven for book lovers, offering a vast collection of genres, from bestsellers and classics to indie gems and rare finds. With competitive prices, convenient browsing, and personalized recommendations.
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Corporate</h3>
+                <ul>
+                    <li>Careers</li>
+                    <li>About Us</li>
+                    <li>Contact Us</li>
+                    <li>FAQs</li>
+                    <li>Vendors</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Information</h3>
+                <ul>
+                    <li>Online Store</li>
+                    <li>Privacy Policy</li>
+                    <li>Refund Policy</li>
+                    <li>Shipping Policy</li>
+                    <li>Terms of Service</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:xyz@gmail.com">Email Us</a></li>
+                    <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/1234567890">WhatsApp</a></li>
+                    <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/profile">Instagram</a></li>
+                    <li><i class="fab fa-twitter"></i> <a href="https://twitter.com/profile">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; Copyright 2024 | Made by Kart.
+        </div>
+    </footer>
+
+    <script>
+        let cartCount = 0;
+
+        function addToCart() {
+            cartCount++;
+            document.getElementById("cartCount").textContent = cartCount;
+            alert("Item added to cart!");
+        }
+
+        function searchBooks() {
+            const query = document.getElementById("searchInput").value;
+            if (query) {
+                alert(`Searching for books related to: "${query}"`);
+            } else {
+                alert("Please enter a search term.");
+            }
+        }
+
+        const countdownDate = new Date().getTime() + 15 * 24 * 60 * 60 * 1000;
+
+        const countdownFunction = setInterval(() => {
+            const now = new Date().getTime();
+            const timeLeft = countdownDate - now;
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+
+            if (timeLeft < 0) {
+                clearInterval(countdownFunction);
+                document.getElementById("days").innerText = "0";
+                document.getElementById("hours").innerText = "0";
+                document.getElementById("minutes").innerText = "0";
+                document.getElementById("seconds").innerText = "0";
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
